@@ -1,0 +1,8 @@
+# Dockerfile
+FROM python:3.10
+WORKDIR /opt/tasks_server
+COPY tasks_server qmanager-0.1.6-py3-none-any.whl logger.ini /opt/tasks_server/
+RUN pip install -r requirements.txt
+RUN pip install qmanager-0.1.6-py3-none-any.whl
+#EXPOSE 8080 - если необходимо открыть порт 8080 для приложения
+CMD [ "python", "front_tasks.py"]

@@ -1,0 +1,63 @@
+#docker-compose.yml
+version: "3"
+services:
+  redis:
+    image: "redis:alpine"
+    hostname: redis
+    ports:
+      - "6379:6379"
+    networks:
+      - test-net
+    # устанавливаем пароль для доступа к redis
+    command: redis-server --requirepass qwerty
+  bot_app:
+    build:
+      context: .
+      dockerfile: Dockerfile-bot
+    depends_on:
+      - redis
+    # если нужно что-то передавать через переменные окружения (см. os.environ в python)
+    environment:
+      BOT_TOKEN: 5219642495:AAHeTAdKOZ-GmfwgDhIOXA9PVW8jOGRkLwk
+    networks:
+      - test-net
+    restart: unless-stopped
+  sever_app:
+    build:
+      context: .
+      dockerfile: Dockerfile-server
+    depends_on:
+      - redis
+    # если нужно что-то передавать через переменные окружения (см. os.environ в python)
+    environment:
+      IEX: pk_b9fd508082aa4f549fe9c3b74a1121fc
+      WORKERS: 3
+    #  DB_HOST: redis
+    #  DB_PASSWORD: pass
+    # привязка порта приложения к порту докер хоста, если порт был открыт через EXPOSE в Dockerfile
+    #ports:
+    #  - "8080:8080"
+    networks:
+      - test-net
+    restart: unless-stopped
+  alert_app:
+    build:
+      context: .
+      dockerfile: Dockerfile-alert
+    depends_on:
+      - redis
+    # если нужно что-то передавать через переменные окружения (см. os.environ в python)
+    #environment:
+    #  DB_USER: usr
+    #  DB_HOST: redis
+    #  DB_PASSWORD: pass
+    # привязка порта приложения к порту докер хоста, если порт был открыт через EXPOSE в Dockerfile
+    #ports:
+    #  - "8080:8080"
+    networks:
+      - test-net
+    restart: unless-stopped
+
+networks:
+  test-net:
+    driver: bridge

@@ -1,0 +1,7 @@
+# Dockerfile
+FROM python:3.10
+WORKDIR /opt/alert_server
+COPY alert_server qmanager-0.1.6-py3-none-any.whl logger.ini /opt/alert_server/
+RUN pip install -r requirements.txt
+RUN pip install qmanager-0.1.6-py3-none-any.whl
+CMD [ "python", "background_task.py"]
