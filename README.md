@@ -4,10 +4,11 @@
 
 ПО разделено на микросервисы, которые расположены в контейнерах docker.
 Install:
-В файле docker-compose.yml необходимо заменить 
-  1)BOT_TOKEN на токен полученный у BotFather в Telegram;
-  2)IEX на токен, полученный на платформе https://iexcloud.io/
-Разместить на сервере проект (тестировался на 4*2.3 CPU, 8 RAM, 80 SSD, Linux Ubuntu 22.04), создать контейнеры и запустить.
+1)В файле docker-compose.yml необходимо заменить
+  BOT_TOKEN на токен полученный у BotFather в Telegram;
+  IEX на токен, полученный на платформе https://iexcloud.io/
+
+2)Разместить на сервере проект (тестировался на 4*2.3 CPU, 8 RAM, 80 SSD, Linux Ubuntu 22.04), создать контейнеры и запустить.
 ![image](https://user-images.githubusercontent.com/82835572/188265149-9d2cd5ba-732a-4e5c-8bde-09325f5e750d.png)
 
 Дополнительная информация
